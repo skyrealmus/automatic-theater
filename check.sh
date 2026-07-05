@@ -191,8 +191,14 @@ prowlarr_config = dict(prowlarr.execute("select Key, Value from Config where Key
 note(prowlarr_config.get('uilanguage') == 'en', "prowlarr Config.uilanguage must be 'en' for English")
 prowlarr.close()
 
+heimdall = sqlite3.connect('file:config/heimdall/www/app.sqlite?mode=ro', uri=True, timeout=2)
+heimdall_items = dict(heimdall.execute("select Title, Url from items where deleted_at is null and Title in ('FlareSolverr', 'Bazarr')"))
+note(heimdall_items.get('FlareSolverr') == 'http://${hostname}:60213', 'Heimdall must include FlareSolverr launcher')
+note(heimdall_items.get('Bazarr') == 'http://${hostname}:60222', 'Heimdall must include Bazarr launcher')
+heimdall.close()
+
 if servarr_failures:
-    print('Servarr English defaults failed:')
+    print('Runtime defaults failed:')
     for item in servarr_failures:
         print(item)
     sys.exit(1)
