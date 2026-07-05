@@ -73,7 +73,7 @@ If the current user is not in the Docker group, run Docker commands with `sudo`.
 Clone or copy the repository to the target host:
 
 ```bash
-git clone https://github.com/jongchinlee/automatic-theater.git
+git clone https://github.com/skyrealmus/automatic-theater.git
 cd automatic-theater
 ```
 
@@ -115,8 +115,8 @@ This repository intentionally ships preconfigured application state for out-of-t
 
 ## Contributing
 
-Issues and pull requests are welcome at <https://github.com/jongchinlee/automatic-theater>.
+Issues and pull requests are welcome at <https://github.com/skyrealmus/automatic-theater>.
 
 ## License
 
-MIT. Original project by LuckyPuppy514.
+MIT. Maintained at <https://github.com/skyrealmus/automatic-theater>. Original project by LuckyPuppy514.

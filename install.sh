@@ -15,7 +15,7 @@ fi
 echo "|------------------------------------------------------|"
 echo "|                                                      |"
 echo "|                  Automatic Theater                   |"
-echo "|  https://github.com/jongchinlee/automatic-theater    |"
+echo "|  https://github.com/skyrealmus/automatic-theater     |"
 echo "|                                                      |"
 echo "|------------------------------------------------------|"
 echo ""
