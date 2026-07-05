@@ -55,13 +55,13 @@ If `172.30.12.0/24` conflicts with the target host network, edit `docker-compose
 
 ## Prerequisites
 
-Install Git, Docker, and Docker Compose v2 on the target host.
+Install Docker and Docker Compose v2 on the target host. Install Git for cloning, or `curl` and `unzip` for ZIP downloads.
 
 Ubuntu/Debian example:
 
 ```bash
 sudo apt update
-sudo apt install -y sudo git curl
+sudo apt install -y sudo git curl unzip
 curl -fsSL https://get.docker.com | sudo sh
 sudo docker compose version
 ```
@@ -70,11 +70,19 @@ If the current user is not in the Docker group, run Docker commands with `sudo`.
 
 ## Install
 
-Clone or copy the repository to the target host:
+Clone the repository:
 
 ```bash
 git clone https://github.com/skyrealmus/automatic-theater.git
 cd automatic-theater
+```
+
+Or download and unzip `main` without Git:
+
+```bash
+curl -L -o automatic-theater-main.zip https://github.com/skyrealmus/automatic-theater/archive/refs/heads/main.zip
+unzip automatic-theater-main.zip
+cd automatic-theater-main
 ```
 
 Review and edit `docker-compose-default.env` if needed:
