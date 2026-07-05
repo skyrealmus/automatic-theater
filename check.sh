@@ -178,8 +178,13 @@ for row_id, ignored in sonarr.execute('select Id, Ignored from ReleaseProfiles')
     note(not blocked, f'sonarr ReleaseProfiles:{row_id} must not ignore English releases: {sorted(blocked)}')
 sonarr.close()
 
+prowlarr = sqlite3.connect('file:config/prowlarr/prowlarr.db?mode=ro', uri=True, timeout=2)
+prowlarr_config = dict(prowlarr.execute("select Key, Value from Config where Key = 'uilanguage'"))
+note(prowlarr_config.get('uilanguage') == 'en', "prowlarr Config.uilanguage must be 'en' for English")
+prowlarr.close()
+
 if servarr_failures:
-    print('Radarr/Sonarr English defaults failed:')
+    print('Servarr English defaults failed:')
     for item in servarr_failures:
         print(item)
     sys.exit(1)
