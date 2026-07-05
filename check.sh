@@ -195,6 +195,10 @@ heimdall = sqlite3.connect('file:config/heimdall/www/app.sqlite?mode=ro', uri=Tr
 heimdall_items = dict(heimdall.execute("select Title, Url from items where deleted_at is null and Title in ('FlareSolverr', 'Bazarr')"))
 note(heimdall_items.get('FlareSolverr') == 'http://${hostname}:60213', 'Heimdall must include FlareSolverr launcher')
 note(heimdall_items.get('Bazarr') == 'http://${hostname}:60222', 'Heimdall must include Bazarr launcher')
+heimdall_language = heimdall.execute("select id, value from settings where key = 'language'").fetchone()
+note(heimdall_language and heimdall_language[1] == 'en', 'Heimdall default language must be English')
+heimdall_user_languages = heimdall.execute('select user_id, uservalue from setting_user where setting_id = ?', (heimdall_language[0],)).fetchall() if heimdall_language else []
+note(all(value == 'en' for _, value in heimdall_user_languages), f'Heimdall user language overrides must be English: {heimdall_user_languages}')
 heimdall.close()
 
 if servarr_failures:
