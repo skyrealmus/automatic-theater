@@ -7,7 +7,7 @@ config/emby/logs
 config/heimdall/log
 config/heimdall/www/logs
 config/jackett/Jackett/log.txt
-config/jellyseerr/logs
+config/seerr/logs
 config/qbittorrent/qBittorrent/logs
 config/radarr/logs
 config/radarr/Backups

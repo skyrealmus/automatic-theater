@@ -4,7 +4,7 @@
  "vapidPublic": "BPuqT0J_Q-QwOF2kmEZOM8ldnREWeLsAiQwVSsuoUpuYkUEY8trIP4KumGfCeLJ0yzOxp9c02MolYClLTjjWhWE",
  "main": {
   "apiKey": "MTY2MTA1MTg2MTIxMWFmYmFhMjdjLTU5NDYtNDVjYi05OGNjLTcyZmRiYmNmOWE2YSk=",
-  "applicationTitle": "Jellyseerr",
+  "applicationTitle": "Seerr",
   "applicationUrl": "",
   "csrfProtection": false,
   "cacheImages": false,
@@ -127,7 +127,7 @@
      "ignoreTls": false,
      "requireTls": false,
      "allowSelfSigned": false,
-     "senderName": "Jellyseerr"
+     "senderName": "Seerr"
     }
    },
    "discord": {

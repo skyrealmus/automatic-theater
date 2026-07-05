@@ -28,14 +28,17 @@
 
 ```mermaid
 graph LR
-    1[Jellyseerr] == 手动请求电视剧/综艺/动漫 ==> 2[Sonarr] == 自动搜索/下载 ==> 3[JProxy] == 自动搜索 ==> 4[Prowlarr]
-    1[Jellyseerr] == 手动请求电影 ==> 6[Radarr] == 自动搜索/下载 ==> 3[JProxy]
+    1[Seerr] == 手动请求电视剧/综艺/动漫 ==> 2[Sonarr] == 自动搜索/下载 ==> 3[JProxy] == 自动搜索 ==> 4[Prowlarr]
+    1[Seerr] == 手动请求电影 ==> 6[Radarr] == 自动搜索/下载 ==> 3[JProxy]
     3[JProxy] == 自动下载 ==> 5[qBittorrentee]
     2[Sonarr] == 自动导入 ==> 7[Emby]
     6[Radarr] == 自动导入 ==> 7[Emby]
+    9[Bazarr] == 自动下载字幕 ==> 7[Emby]
+    10[Recyclarr] == 同步质量规则 ==> 2[Sonarr]
+    10[Recyclarr] == 同步质量规则 ==> 6[Radarr]
     7[Emby] == 自动刮削信息 ==> 7[Emby]
     11[用户] == 使用 ==> 8[浏览器/手机/电脑/电视] == 观看 ==> 7[Emby]
-    11[用户] == 使用 ==> 1[Jellyseerr]
+    11[用户] == 使用 ==> 1[Seerr]
 ```
 
 🤗 本项目涉及系统
@@ -44,23 +47,22 @@ graph LR
 | :---: | :---: | :---: | :---: |
 | [Heimdall](https://github.com/linuxserver/Heimdall) | 程序仪表盘  | ⭕ | 导航页，自定义了 CSS 和 JS，开箱即用 |
 | [Emby](https://emby.media) | 媒体服务器 | ⭕ | 刮削信息，提供观看服务 |
-| [Jellyseerr](https://github.com/Fallenbagel/jellyseerr) | 聚合搜索 | ⭕ | 搜索并推送到 Sonarr / Radarr |
+| [Seerr](https://github.com/seerr-team/seerr) | 聚合搜索 | ⭕ | 搜索并推送到 Sonarr / Radarr |
 | [Radarr](https://github.com/Radarr/Radarr) | 电影订阅系统 | ⭕ | 定时搜索，下载，重命名并导入 |
 | [Sonarr](https://github.com/Sonarr/Sonarr) | 电视剧和动漫订阅系统 | ⭕ | 定时搜索，下载，重命名并导入 |
 | [Prowlarr](https://github.com/Prowlarr/Prowlarr) | 种子站代理 | ⭕ | 可添加种子站，提供种子搜索，支持结果缓存 |
 | [FlareSolverr](https://github.com/FlareSolverr/FlareSolverr) | 绕过 Cloudflare 和 DDoS-GUARD | - | Prowlarr 已配置，无其他操作 |
 | [JProxy](https://github.com/LuckyPuppy514/jproxy) | 种子站代理过滤 | ⭕ | 介于 Sonarr / Radarr 和 Prowlarr / Prowlarr 之间的代理，主要用于优化查询和提升识别率 |
 | [qBittorrent](https://github.com/qbittorrent/qBittorrent) | 下载客户端 | ⭕ | qBittorrent |
+| [Bazarr](https://github.com/morpheus65535/bazarr) | 字幕下载 | ⭕ | 自动下载电影和电视剧字幕 |
 | [ChineseSubFinder](https://github.com/ChineseSubFinder/ChineseSubFinder) | 字幕下载 | ⭕ | 自动下载电影和电视剧字幕 |
+| [Recyclarr](https://github.com/recyclarr/recyclarr) | 质量规则同步 | - | 同步 Sonarr / Radarr 质量配置 |
 
 Heimdall
 ![20230414183719](https://github.com/LuckyPuppy514/image/raw/main/2023/2023-04-14/20230414183719.webp)
 
 Emby
 ![Emby_tuya](https://cdn.jsdelivr.net/gh/LuckyPuppy514/pic-bed/common/Emby_tuya.jpg)
-
-Jellyseerr
-![Jellyseerr_tuya](https://cdn.jsdelivr.net/gh/LuckyPuppy514/pic-bed/common/Jellyseerr_tuya.jpg)
 
 Radarr
 ![Radarr_tuya](https://cdn.jsdelivr.net/gh/LuckyPuppy514/pic-bed/common/Radarr_tuya.jpg)
@@ -234,7 +236,7 @@ sudo docker-compose down
 
 ```mermaid
 graph LR
-    1[Heimdall] == 1. 搜索和请求电影/电视剧/动漫 ==> 3[Jellyseerr]
+    1[Heimdall] == 1. 搜索和请求电影/电视剧/动漫 ==> 3[Seerr]
     1[Heimdall] == 2. 查看搜索结果 ==> 4[Sonarr / Radarr]
     1[Heimdall] == 3. 查看下载进度 ==> 5[qBittorrentee]
     1[Heimdall] == 4. 观看 ==> 6[Emby]
@@ -248,9 +250,11 @@ graph LR
 | FlareSolverr | `http://ip:60213` | - | - |
 | Prowlarr | `http://ip:60223` | atm | atm@20230101 |
 | JProxy | `http://ip:60215` | atm | atm@20230101 |
-| Jellyseerr | `http://ip:60216` | atm | atm@20230101 |
+| Seerr | `http://ip:60216` | atm | atm@20230101 |
 | Radarr | `http://ip:60217` | atm | atm@20230101 |
 | Sonarr | `http://ip:60218` | atm | atm@20230101 |
+| Bazarr | `http://ip:60222` | atm | atm@20230101 |
+| Recyclarr | - | - | - |
 | qBittorrent | `http://ip:60219` | atm | atm@20230101 |
 | ChineseSubFinder | `http://ip:60221` | atm | atm@20230101 |
 | Emby | `http://ip:60220` | atm | atm@20230101 |

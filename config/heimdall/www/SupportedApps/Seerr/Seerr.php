@@ -1,6 +1,6 @@
-<?php namespace App\SupportedApps\Jellyseerr;
+<?php namespace App\SupportedApps\Seerr;
 
-class Jellyseerr extends \App\SupportedApps implements \App\EnhancedApps {
+class Seerr extends \App\SupportedApps implements \App\EnhancedApps {
 
     public $config;
 

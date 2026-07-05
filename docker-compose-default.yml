@@ -14,7 +14,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - TZ=Asia/Shanghai
+      - TZ=${TZ}
     volumes:
       - ${CONFIG_PATH}/heimdall:/config
     ports:
@@ -73,9 +73,9 @@ services:
       network:
         ipv4_address: 172.30.12.15
 
-  jellyseerr:
-    image: fallenbagel/jellyseerr:latest
-    container_name: jellyseerr
+  seerr:
+    image: seerr/seerr:latest
+    container_name: seerr
     restart: unless-stopped
     environment:
       - LOG_LEVEL=info
@@ -84,7 +84,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
-      - ${CONFIG_PATH}/jellyseerr:/app/config
+      - ${CONFIG_PATH}/seerr:/app/config
     ports:
       - 60216:5055
     networks:
@@ -133,6 +133,42 @@ services:
     depends_on:
       - jproxy
       - qbittorrent
+
+  bazarr:
+    image: linuxserver/bazarr:latest
+    container_name: bazarr
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_PATH}/bazarr:/config
+      - ${MEDIA_PATH}:/media/video
+    ports:
+      - 60222:6767
+    networks:
+      network:
+        ipv4_address: 172.30.12.22
+    depends_on:
+      - sonarr
+      - radarr
+
+  recyclarr:
+    image: recyclarr/recyclarr:latest
+    container_name: recyclarr
+    restart: unless-stopped
+    user: ${PUID}:${PGID}
+    environment:
+      - TZ=${TZ}
+    volumes:
+      - ${CONFIG_PATH}/recyclarr:/config
+    networks:
+      network:
+        ipv4_address: 172.30.12.24
+    depends_on:
+      - sonarr
+      - radarr
 
   qbittorrent:
     image: linuxserver/qbittorrent:latest

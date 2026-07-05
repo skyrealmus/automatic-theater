@@ -1,0 +1,10 @@
+# ponytail: endpoints only; add TRaSH templates after choosing quality profiles.
+radarr:
+  radarr:
+    base_url: http://172.30.12.17:7878
+    api_key: ca7d9fcbaae64526b24adf580e32fe41
+
+sonarr:
+  sonarr:
+    base_url: http://172.30.12.18:8989
+    api_key: 43cc956985c343998f815949250c2a34
