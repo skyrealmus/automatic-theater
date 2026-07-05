@@ -36,6 +36,11 @@ bad_images=$(awk '/image:/{print $2}' "$compose" | grep -v ':latest$' || true)
 
 bash -n install.sh
 
+if awk '/^```mermaid$/{inside=1; next} /^```$/{inside=0} inside && /== .* ==>/ {found=1} END{exit found ? 0 : 1}' README.md; then
+  echo 'invalid Mermaid edge label syntax in README.md'
+  exit 1
+fi
+
 python3 - <<'PY'
 import re
 import sqlite3

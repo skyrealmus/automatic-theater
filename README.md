@@ -28,17 +28,17 @@ Default login for preconfigured services that require credentials:
 ## Runtime flow
 
 ```mermaid
-graph LR
-    Seerr == Request movies or series ==> SonarrRadarr[Sonarr / Radarr]
-    SonarrRadarr == Search ==> JProxy
-    JProxy == Proxy search ==> Prowlarr
-    Prowlarr == Releases ==> JProxy
-    SonarrRadarr == Download ==> qBittorrent
-    qBittorrent == Completed media ==> MediaFolders[/media/video]
-    SonarrRadarr == Import and rename ==> Emby
-    Bazarr == Download subtitles ==> Emby
-    Recyclarr == Sync quality rules ==> SonarrRadarr
-    User == Watch ==> Emby
+flowchart LR
+    Seerr -->|Request movies or series| SonarrRadarr["Sonarr / Radarr"]
+    SonarrRadarr -->|Search| JProxy
+    JProxy -->|Proxy search| Prowlarr
+    Prowlarr -->|Releases| JProxy
+    SonarrRadarr -->|Download| qBittorrent
+    qBittorrent -->|Completed media| MediaFolders["/media/video"]
+    SonarrRadarr -->|Import and rename| Emby
+    Bazarr -->|Download subtitles| Emby
+    Recyclarr -->|Sync quality rules| SonarrRadarr
+    User -->|Watch| Emby
 ```
 
 ## Defaults
